@@ -1,4 +1,5 @@
 import { FC, useEffect, useRef } from "react";
+import { Group } from "three";
 import { createCamera } from "./components/camera";
 import { createLights } from "./components/lights";
 import { createObject } from "./components/object";
@@ -10,7 +11,10 @@ import { Resizer } from "./systems/resizer";
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 // import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-export const ModelViewer: FC = () => {
+type Props = {
+  needleRotation: number;
+};
+export const ModelViewer: FC<Props> = ({ needleRotation }) => {
   const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,10 +31,16 @@ export const ModelViewer: FC = () => {
 
     const controls = createControls(camera, renderer.domElement);
 
-    const object = createObject();
+    const { gauge, needle } = createObject(needleRotation);
+
+    const group = new Group();
+    group.add(gauge);
+    group.add(needle);
+    group.rotateY((90 * Math.PI) / 180);
+
     const lights = createLights();
 
-    scene.add(object, ...lights);
+    scene.add(group, ...lights);
 
     new Resizer(container, camera, renderer);
 
@@ -54,7 +64,7 @@ export const ModelViewer: FC = () => {
       if (!container) return;
       container.removeChild(renderer.domElement);
     };
-  }, []);
+  }, [needleRotation]);
 
   return <div ref={mountRef}></div>;
 };

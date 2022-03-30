@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef } from "react";
-import { Group } from "three";
+import { Group, WebGLRenderer } from "three";
 import { createCamera } from "./components/camera";
 import { createLights } from "./components/lights";
 import { createObject } from "./components/object";
@@ -17,19 +17,38 @@ type Props = {
 export const ModelViewer: FC<Props> = ({ needleRotation }) => {
   const mountRef = useRef<HTMLDivElement>(null);
 
+  let renderer = useRef<WebGLRenderer>();
+  const saveAsImage = () => {
+    console.log("save");
+    var imgData, imgNode;
+
+    try {
+      var strMime = "image/jpeg";
+      imgData = renderer?.current?.domElement.toDataURL(strMime);
+      console.log(imgData);
+    } catch (e) {
+      console.log(e);
+      return;
+    }
+  };
+
+  const test123 = () => {
+    console.log("test123");
+  };
+
   useEffect(() => {
     const container = mountRef.current;
 
     const scene = createScene();
     const camera = createCamera();
-    const renderer = createRenderer();
+    renderer.current = createRenderer();
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.current.setSize(window.innerWidth, window.innerHeight);
 
     if (!container) return;
-    container.appendChild(renderer.domElement);
+    container.appendChild(renderer.current.domElement);
 
-    const controls = createControls(camera, renderer.domElement);
+    const controls = createControls(camera, renderer.current.domElement);
 
     const { gauge, needle } = createObject(needleRotation);
 
@@ -42,9 +61,9 @@ export const ModelViewer: FC<Props> = ({ needleRotation }) => {
 
     scene.add(group, ...lights);
 
-    new Resizer(container, camera, renderer);
+    new Resizer(container, camera, renderer?.current);
 
-    renderer.render(scene, camera);
+    renderer.current.render(scene, camera);
 
     // TODO: remove animation
     var animate = function () {
@@ -55,16 +74,23 @@ export const ModelViewer: FC<Props> = ({ needleRotation }) => {
       // object.rotation.y += 0.01;
       // object.rotation.z += 0.01;
       // new Resizer(container, camera, renderer);
-      renderer.render(scene, camera);
+      renderer?.current?.render(scene, camera);
     };
     animate();
 
     // TODO: is this needed?
     return () => {
       if (!container) return;
-      container.removeChild(renderer.domElement);
+      if (renderer?.current?.domElement) {
+        container.removeChild(renderer?.current?.domElement);
+      }
     };
   }, [needleRotation]);
 
-  return <div ref={mountRef}></div>;
+  return (
+    <div>
+      <div ref={mountRef}></div>
+      <button onClick={saveAsImage}>Take screenshot</button>
+    </div>
+  );
 };

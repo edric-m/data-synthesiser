@@ -9,7 +9,7 @@ function createCamera() {
   );
 
   // move the camera back so we can view the scene
-  camera.position.set(0, 10, 0);
+  camera.position.set(0, 0, 10);
   camera.rotation.y += (90 * Math.PI) / 180;
 
   return camera;

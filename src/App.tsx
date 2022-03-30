@@ -10,11 +10,11 @@ function App() {
     setRotation(parseFloat(event.target.value));
   };
 
-  const randomiseNeedle = () => {
-    for (let x = 0; (x += 0.1); x < 0.3) {
-      setRotation(x);
-    }
-  };
+  // const randomiseNeedle = () => {
+  //   for (let x = 0; (x += 0.1); x < 0.3) {
+  //     setRotation(x);
+  //   }
+  // };
 
   return (
     <div className="App">
@@ -30,3 +30,36 @@ function App() {
 }
 
 export default App;
+
+// const takeScreenshotCanvas = async (stream: MediaStream): Promise<HTMLCanvasElement> => {
+//   const video = document.createElement('video');
+//   const result = await new Promise<HTMLCanvasElement>((resolve) => {
+//     video.addEventListener('loadedmetadata', () => {
+//       video.play();
+//       video.pause();
+//       const canvas = document.createElement('canvas');
+//       canvas.width = video.videoWidth;
+//       canvas.height = video.videoHeight;
+//       const context = canvas.getContext('2d');
+//       context!.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+//       resolve(canvas);
+//     });
+//     video.srcObject = stream;
+//   });
+
+//   // stream!.getTracks().forEach(function (track) {
+//   //   track.stop();
+//   // });
+
+//   if (result == null) {
+//     throw new Error('Cannot take canvas screenshot');
+//   }
+
+//   return new Promise<HTMLCanvasElement>((resolve, reject) => {
+//     if (result) {
+//       resolve(result);
+//     } else {
+//       reject();
+//     }
+//   });
+// };

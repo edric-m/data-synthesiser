@@ -5,6 +5,7 @@ import {
   Mesh,
   MeshPhongMaterial,
   MeshStandardMaterial,
+  Shape,
   TextureLoader,
   Vector3,
 } from "three";

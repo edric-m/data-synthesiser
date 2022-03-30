@@ -4,6 +4,7 @@ import { createCamera } from "./components/camera";
 import { createLights } from "./components/lights";
 import { createObject } from "./components/object";
 import { createScene } from "./components/scene";
+import { createSky } from "./components/sky";
 import { createControls } from "./systems/controls";
 import { createRenderer } from "./systems/renderer";
 import { Resizer } from "./systems/resizer";
@@ -52,14 +53,18 @@ export const ModelViewer: FC<Props> = ({ needleRotation }) => {
 
     const { gauge, needle } = createObject(needleRotation);
 
+    const sky = createSky();
+
     const group = new Group();
     group.add(gauge);
     group.add(needle);
+    group.translateZ(-5);
+    group.rotateX((90 * Math.PI) / 180);
     group.rotateY((90 * Math.PI) / 180);
 
     const lights = createLights();
 
-    scene.add(group, ...lights);
+    scene.add(sky, group, ...lights);
 
     new Resizer(container, camera, renderer?.current);
 

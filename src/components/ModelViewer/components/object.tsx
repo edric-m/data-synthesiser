@@ -30,7 +30,8 @@ function createObject(needleRotation: number) {
   const needleGeo = new BoxBufferGeometry(needleLength, 0.4, 0.4);
   // needleGeo.rotateY(0.3);
   const needleMat = new MeshPhongMaterial({ color: new Color("red") });
-  needleMat.shininess = 10;
+  needleMat.specular = new Color("white");
+  needleMat.shininess = 100;
   // create a Mesh containing the geometry and material
   const object = new Mesh(geometry, material);
   const needleMesh = new Mesh(needleGeo, needleMat);
@@ -50,6 +51,8 @@ function createObject(needleRotation: number) {
     needleRotation,
     true
   );
+
+  // needleMesh.position.x += 3 / 2;
   // needleMesh.rotateOnAxis(new Vector3(0, 1, 0), needleRotation);
 
   return { gauge: object, needle: needleMesh };
@@ -63,6 +66,19 @@ function rotateAboutPoint(
   pointIsWorld: any
 ) {
   pointIsWorld = pointIsWorld === undefined ? false : pointIsWorld;
+
+  //reset position
+  obj.position.x = 0;
+  obj.position.y = 1;
+  obj.position.z = 0;
+  obj.rotation.x = 0;
+  obj.rotation.y = 0;
+  obj.rotation.z = 0;
+
+  // reset take 2
+  // obj.position.add(point);
+  // obj.applyAxisAngle(axis, 0);
+  // obj.position.sub(point);
 
   // if (pointIsWorld) {
   //   obj.parent.localToWorld(obj.position); // compensate for world coordinate
@@ -79,4 +95,4 @@ function rotateAboutPoint(
   obj.rotateOnAxis(axis, theta); // rotate the OBJECT
 }
 
-export { createObject };
+export { createObject, rotateAboutPoint };

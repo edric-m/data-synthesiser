@@ -27,9 +27,9 @@ function createObject(needleRotation: number) {
 
   const needleLength = 3;
   // needle
-  const needleGeo = new BoxBufferGeometry(needleLength, 0.4, 0.4);
+  const needleGeo = new BoxBufferGeometry(needleLength, 0.2, 0.2);
   // needleGeo.rotateY(0.3);
-  const needleMat = new MeshPhongMaterial({ color: new Color("red") });
+  const needleMat = new MeshPhongMaterial({ color: new Color("black") });
   needleMat.specular = new Color("white");
   needleMat.shininess = 100;
   // create a Mesh containing the geometry and material
@@ -85,14 +85,14 @@ function rotateAboutPoint(
   // }
 
   obj.position.sub(point); // remove the offset
-  obj.position.applyAxisAngle(axis, theta); // rotate the POSITION
+  obj.position.applyAxisAngle(axis, -theta); // rotate the POSITION
   // obj.position.add(point); // re-add the offset
 
   // if (pointIsWorld) {
   //   obj.parent.worldToLocal(obj.position); // undo world coordinates compensation
   // }
 
-  obj.rotateOnAxis(axis, theta); // rotate the OBJECT
+  obj.rotateOnAxis(axis, -theta); // rotate the OBJECT
 }
 
 export { createObject, rotateAboutPoint };

@@ -6,7 +6,7 @@ function App() {
   const [rotation, setRotation] = useState(0);
 
   const handleRotationChanged = (event: any) => {
-    console.log("new rotation", parseFloat(event.target.value));
+    // console.log("new rotation", parseFloat(event.target.value));
     setRotation(parseFloat(event.target.value));
   };
 
@@ -20,7 +20,11 @@ function App() {
     <div className="App">
       <header className="App-header">
         <ModelViewer needleRotation={rotation} />
-        <input type="text" onChange={handleRotationChanged} />
+        <input
+          type="text"
+          onChange={handleRotationChanged}
+          style={{ position: "absolute", bottom: "500px", right: "845px" }}
+        />
         {/* <button type="button" onClick={randomiseNeedle}>
           Start
         </button> */}

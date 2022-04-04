@@ -1,3 +1,9 @@
+# Setting up the texture server
+
+- install npm
+- Open the /textures folder in a terminal
+- to serve the images, enter `npx http-server --cors`
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -86,7 +86,7 @@ export const ModelViewer: FC<Props> = ({ needleRotation }) => {
     let ratio,
       result = 0;
     if (value > 0.8 && value < 5.5) {
-      ratio = value / 5.5;
+      ratio = (value - 0.8) / (5.5 - 0.8);
       result = ratio * (maxValue - minValue);
     }
     setModalText(result);
